@@ -57,6 +57,28 @@ To add the speaker's photo:
 If a talk has no `photo:` line, the flyer shows the speaker's
 initials instead.
 
+## The printable flyer
+
+Every talk also gets a letter-size flyer page, built automatically
+the moment the talk's file is committed. It is linked from the talk's
+row on the schedule ("Flyer") and from the home-page card ("Printable
+flyer"), and lives at `flyers/YYYY-MM-DD-lastname.html`. Open it and
+press **Print / Save as PDF** to get a PDF for email or printing.
+
+The flyer uses these fields from the talk's file:
+
+- `title:` and the optional `subtitle:` (printed as a second line)
+- `date:`, plus `time:` — leave `time:` out to use the usual seminar
+  time from `_data/site.yml`
+- `speaker:`, `affiliation:`, `photo:`
+- the abstract, written below the second `---`
+- `link:` (optional, e.g. the speaker's web page) — printed in the footer
+- `host:` (optional) — printed in the footer
+
+The banner text and logo are set once in `_data/site.yml`
+(`flyer_series:` and `flyer_logo:`). Long titles and abstracts are
+shrunk automatically to keep the flyer on one page.
+
 ## Edit the team or the links
 
 - Team page: edit `_data/team.yml`. Photos go in `images/`.

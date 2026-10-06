@@ -3,8 +3,14 @@ name: "Biology Seminar Series"
 year: "2026–2027"
 intro: "A weekly seminar bringing researchers from across the life sciences to share new work with students, postdocs, and faculty. All are welcome."
 when: "Mondays, 3:00–4:00 PM"
+time: "3:00 – 4:00 PM"   # printed on flyers; a talk can override it with time:
 where: "Example University"
 contact: "seminar@example.edu"
 
 # Set to false to hide the weekly flyer panel on the home page.
 flyer_show: true
+
+# Printable flyers (flyers/<talk-file>.html). The banner reads
+# "<flyer_series> | <semester>"; the logo sits in the top-right corner.
+flyer_series: "Biology Colloquium Series"
+flyer_logo: images/flyer-logo.png
