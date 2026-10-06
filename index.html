@@ -31,6 +31,7 @@ permalink: /
       </div>
       <div class="fc-when" id="fc-when">{{ next_talk.date | date: '%A, %B %-d' }} · {{ next_talk.room | default: site.data.site.where }}</div>
     </div>
+    <a class="flyer-print" id="fc-print" href="{{ next_talk.url | remove_first: '/' }}">Printable flyer →</a>
     {% else %}
     <div class="flyer-empty">The next talk appears here</div>
     {% endif %}
@@ -49,14 +50,14 @@ permalink: /
     {% for t in s.items %}
     {% if t.speaker %}
     {% assign w = t.speaker | replace: "Dr. ", "" | split: " " %}
-    <li class="talk" data-date="{{ t.date | date: '%Y-%m-%d' }}" data-speaker="{{ t.speaker | escape }}" data-title="{{ t.title | escape }}" data-affil="{{ t.affiliation | escape }}" data-initials="{{ w[0] | slice: 0 | upcase }}{{ w[1] | slice: 0 | upcase }}" data-datelong="{{ t.date | date: '%A, %B %-d' }}" data-room="{{ t.room | default: site.data.site.where | escape }}"{% if t.photo %} data-photo="{{ t.photo }}"{% endif %}>
+    <li class="talk" data-date="{{ t.date | date: '%Y-%m-%d' }}" data-speaker="{{ t.speaker | escape }}" data-title="{{ t.title | escape }}" data-affil="{{ t.affiliation | escape }}" data-initials="{{ w[0] | slice: 0 | upcase }}{{ w[1] | slice: 0 | upcase }}" data-datelong="{{ t.date | date: '%A, %B %-d' }}" data-room="{{ t.room | default: site.data.site.where | escape }}" data-flyer="{{ t.url | remove_first: '/' }}"{% if t.photo %} data-photo="{{ t.photo }}"{% endif %}>
       <div class="date"><span class="day">{{ t.date | date: "%b %-d" }}</span><span class="dow">{{ t.date | date: "%A" }}</span></div>
       <div class="talk-main">
         <p class="speaker">{{ t.speaker }}</p>
         <p class="affil">{{ t.affiliation }}</p>
         <p class="title">{{ t.title }}</p>
       </div>
-      <div class="meta">{% if t.host %}<div>Host: {{ t.host }}</div>{% endif %}<div>{{ t.room | default: site.data.site.where }}</div></div>
+      <div class="meta">{% if t.host %}<div>Host: {{ t.host }}</div>{% endif %}<div>{{ t.room | default: site.data.site.where }}</div><div><a href="{{ t.url | remove_first: '/' }}">Flyer</a></div></div>
     </li>
     {% else %}
     <li class="talk break" data-date="{{ t.date | date: '%Y-%m-%d' }}">
@@ -98,6 +99,8 @@ permalink: /
     set("fc-speaker", d.speaker);
     set("fc-affil", d.affil);
     set("fc-when", `${d.datelong} · ${d.room}`);
+    const print = document.getElementById("fc-print");
+    if (print) print.href = d.flyer;
     const photo = document.getElementById("fc-photo");
     if (photo) photo.innerHTML = d.initials +
       (d.photo ? `<img src="${d.photo}" alt="" onerror="this.remove()">` : "");

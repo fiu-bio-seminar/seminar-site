@@ -1,0 +1,66 @@
+# Builds the site and saves a PDF of every talk's flyer to flyers/,
+# committing any new or changed PDFs back to the branch. Runs when a
+# talk, the flyer layout, the site settings, or an image changes.
+name: Flyer PDFs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "_talks/**"
+      - "_layouts/flyer.html"
+      - "_data/site.yml"
+      - "_config.yml"
+      - "images/**"
+      - ".github/scripts/render-flyers.mjs"
+      - ".github/workflows/flyer-pdfs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: flyer-pdfs
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Build the site
+        # Jekyll is installed directly (not through Gemfile.lock) and the
+        # flyers use Arial, so install a metric-compatible font.
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-liberation
+          gem install jekyll -v "~> 4.3" --no-document
+          JEKYLL_NO_BUNDLER_REQUIRE=true jekyll build -d "$RUNNER_TEMP/site"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Render flyer PDFs
+        working-directory: .github/scripts
+        run: |
+          npm install --no-save --no-package-lock playwright@1
+          npx playwright install --with-deps chromium
+          node render-flyers.mjs "$RUNNER_TEMP/site" "$GITHUB_WORKSPACE"
+
+      - name: Commit changed PDFs
+        run: |
+          git add -A flyers/
+          if git diff --cached --quiet; then echo "No flyer changes."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update flyer PDFs"
+          for i in 1 2 3; do
+            git pull --rebase --quiet origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME" && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
