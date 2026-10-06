@@ -24,13 +24,21 @@ All names and talks currently in the repository are sample content.
 - `_layouts/flyer.html` — the printable letter-size flyer generated for
   each talk at `flyers/<talk-file>.html` (title, subtitle, date/time,
   speaker photo, abstract, link; prints to a one-page PDF)
+- `.github/workflows/flyer-pdfs.yml` — on pushes to `main` that touch
+  talks, the flyer layout, settings, or images, builds the site, renders
+  each talk's flyer to `flyers/<talk-file>.pdf` with headless Chromium
+  (`.github/scripts/render-flyers.mjs`), and commits new or changed
+  PDFs. Unchanged flyers are skipped using `flyers/.hashes.json`; it can
+  also be run by hand from the Actions tab
 - `images/` — speaker and team photos, and the flyer logo
 
 ## Deploying
 
 Push to the default branch of a repository with GitHub Pages enabled
 (Settings → Pages → Deploy from a branch). GitHub Pages builds Jekyll
-natively; no Actions workflow is needed.
+natively; the only Actions workflow is the optional flyer-PDF one,
+which needs Settings → Actions → General → Workflow permissions set to
+"Read and write" if the organization defaults to read-only.
 
 Editing instructions for committee members are in
 [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -62,8 +62,14 @@ initials instead.
 Every talk also gets a letter-size flyer page, built automatically
 the moment the talk's file is committed. It is linked from the talk's
 row on the schedule ("Flyer") and from the home-page card ("Printable
-flyer"), and lives at `flyers/YYYY-MM-DD-lastname.html`. Open it and
-press **Print / Save as PDF** to get a PDF for email or printing.
+flyer"), and lives at `flyers/YYYY-MM-DD-lastname.html`.
+
+A PDF of each flyer is also made automatically: a few minutes after a
+talk is added or edited, a robot commit ("Update flyer PDFs") saves
+`flyers/YYYY-MM-DD-lastname.pdf`, and the flyer page gains a
+**Download PDF** link. Progress shows on the repository's **Actions**
+tab, under "Flyer PDFs". The **Print / Save as PDF** button on the
+flyer page works any time, too.
 
 The flyer uses these fields from the talk's file:
 
