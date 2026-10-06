@@ -1,0 +1,96 @@
+---
+layout: default
+permalink: /
+---
+{% assign talks = site.talks | where_exp: "t", "t.template != true" | sort: "date" %}
+{% assign semesters = talks | group_by: "semester" %}
+{% assign now_s = site.time | date: "%s" | plus: 0 %}
+{% for t in talks %}{% assign ts = t.date | date: "%s" | plus: 0 %}{% if t.speaker and ts >= now_s %}{% unless next_talk %}{% assign next_talk = t %}{% endunless %}{% endif %}{% endfor %}
+
+<div class="hero">
+  <div>
+    <div class="kicker">Speaker schedule · {{ site.data.site.year }}</div>
+    <h1>{{ site.data.site.name }}</h1>
+    <p class="lede">{{ site.data.site.intro }}</p>
+    <ul class="facts"><li><b>When</b>{{ site.data.site.when }}</li><li><b>Where</b>{{ site.data.site.where }}</li></ul>
+    <div class="jump">{% for s in semesters %}<a href="#{{ s.name | slugify }}">{{ s.name }}</a>{% endfor %}</div>
+  </div>
+  {% if site.data.site.flyer_show %}
+  <figure class="flyer" id="flyer" data-for="{% if next_talk %}{{ next_talk.date | date: '%Y-%m-%d' }}{% endif %}">
+    <div class="flyer-label">Next seminar</div>
+    <div id="flyer-slot">
+      {%- if next_talk.flyer -%}
+      <img id="flyer-img" src="{{ next_talk.flyer }}" alt="Flyer for the next seminar">
+      {%- else -%}
+      <div class="flyer-empty">The next talk's flyer goes here</div>
+      {%- endif -%}
+    </div>
+    <figcaption id="flyer-caption">{% if next_talk %}{{ next_talk.speaker }} · {{ next_talk.date | date: '%A, %B %-d' }} · {{ next_talk.room | default: site.data.site.where }}{% endif %}</figcaption>
+  </figure>
+  {% endif %}
+</div>
+
+{% for s in semesters %}
+<div class="semester" id="{{ s.name | slugify }}">
+  <div class="semester-head">
+    <h2>{{ s.name }}</h2>
+    {% assign n = s.items | where_exp: "t", "t.speaker" | size %}
+    <span>{{ n }} talks</span>
+  </div>
+  <ol class="talks">
+    {% for t in s.items %}
+    {% if t.speaker %}
+    <li class="talk" data-date="{{ t.date | date: '%Y-%m-%d' }}" data-speaker="{{ t.speaker | escape }}" data-datelong="{{ t.date | date: '%A, %B %-d' }}" data-room="{{ t.room | default: site.data.site.where | escape }}"{% if t.flyer %} data-flyer="{{ t.flyer }}"{% endif %}>
+      <div class="date"><span class="day">{{ t.date | date: "%b %-d" }}</span><span class="dow">{{ t.date | date: "%A" }}</span></div>
+      <div class="talk-main">
+        <p class="speaker">{{ t.speaker }}</p>
+        <p class="affil">{{ t.affiliation }}</p>
+        <p class="title">{{ t.title }}</p>
+      </div>
+      <div class="meta">{% if t.host %}<div>Host: {{ t.host }}</div>{% endif %}<div>{{ t.room | default: site.data.site.where }}</div></div>
+    </li>
+    {% else %}
+    <li class="talk break" data-date="{{ t.date | date: '%Y-%m-%d' }}">
+      <div class="date"><span class="day">{{ t.date | date: "%b %-d" }}</span><span class="dow">{{ t.date | date: "%A" }}</span></div>
+      <p class="title">{{ t.note }}</p>
+    </li>
+    {% endif %}
+    {% endfor %}
+  </ol>
+</div>
+{% endfor %}
+
+<script>
+/* The build renders the schedule; this script applies the date-relative
+   state (past rows, the "Next up" highlight, and which flyer shows) at
+   page load, so the page stays correct between commits. */
+(function () {
+  const parse = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const addTag = (row, text) => {
+    const main = row.querySelector(".talk-main");
+    if (!main) return;
+    const tag = document.createElement("span");
+    tag.className = "tag"; tag.textContent = text;
+    main.prepend(tag);
+  };
+  let next = null;
+  for (const row of document.querySelectorAll(".talk[data-date]")) {
+    const d = parse(row.dataset.date);
+    if (d < today) { row.classList.add("past"); addTag(row, "Past"); }
+    else if (!next && row.dataset.speaker) { next = row; row.classList.add("next"); addTag(row, "Next up"); }
+  }
+  /* Repoint the hero flyer at the true next talk when the build predates it. */
+  const flyer = document.getElementById("flyer");
+  const empty = '<div class="flyer-empty">The next talk\'s flyer goes here</div>';
+  if (flyer && next && flyer.dataset.for !== next.dataset.date) {
+    document.getElementById("flyer-slot").innerHTML = next.dataset.flyer
+      ? `<img id="flyer-img" src="${next.dataset.flyer}" alt="Flyer for the next seminar">`
+      : empty;
+    document.getElementById("flyer-caption").textContent =
+      `${next.dataset.speaker} · ${next.dataset.datelong} · ${next.dataset.room}`;
+  }
+  const img = document.getElementById("flyer-img");
+  if (img) img.addEventListener("error", () => { document.getElementById("flyer-slot").innerHTML = empty; });
+})();
+</script>

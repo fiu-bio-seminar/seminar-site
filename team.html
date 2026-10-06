@@ -1,0 +1,22 @@
+---
+layout: default
+title: Team
+permalink: /team.html
+---
+<div class="kicker">Organizing committee</div>
+<h1>The team</h1>
+<p class="lede">{{ site.data.team.intro }}</p>
+<div class="team">
+  {% for p in site.data.team.members %}
+  <article class="person">
+    <div class="avatar" aria-hidden="true">
+      {%- assign words = p.name | replace: "Dr. ", "" | split: " " -%}
+      {{ words[0] | slice: 0 | upcase }}{{ words[1] | slice: 0 | upcase }}
+      {%- if p.photo and p.photo != "" %}<img src="images/{{ p.photo }}" alt="" onerror="this.remove()">{% endif -%}
+    </div>
+    <div><div class="role">{{ p.role }}</div><h3>{{ p.name }}</h3></div>
+    <p>{{ p.bio }}</p>
+    {% if p.email and p.email != "" %}<div class="email">{{ p.email }}</div>{% endif %}
+  </article>
+  {% endfor %}
+</div>

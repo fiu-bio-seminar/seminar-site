@@ -1,0 +1,18 @@
+---
+layout: default
+title: Links
+permalink: /links.html
+---
+<div class="links">
+  <div class="kicker">Links</div>
+  <h1>{{ site.data.site.name }}</h1>
+  <p class="lede">{{ site.data.links.intro }}</p>
+  <div class="linklist">
+    {% for l in site.data.links.items %}
+    <a href="{{ l.url }}" target="_blank" rel="noopener">
+      <strong>{{ l.label }}</strong>
+      {%- if l.note and l.note != "" %}<span>{{ l.note }}</span>{% endif -%}
+    </a>
+    {% endfor %}
+  </div>
+</div>

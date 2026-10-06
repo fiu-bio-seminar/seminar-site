@@ -1,0 +1,68 @@
+# How to update the site
+
+Everything is edited directly on github.com in a web browser. Each saved
+change ("commit") rebuilds the site automatically; the live page updates
+in about a minute. No software is required on your computer.
+
+## Add a talk
+
+1. Open the `_talks` folder in this repository on github.com.
+2. Open `TEMPLATE.md` and copy its contents.
+3. Go back to `_talks`, choose **Add file → Create new file**.
+4. Name the file `YYYY-MM-DD-lastname.md`, using the talk date,
+   for example `2026-10-12-rivera.md`.
+5. Paste the template, fill in the fields between the two `---` lines,
+   and **delete the `template: true` line**.
+6. Press **Commit changes**.
+
+Rules that keep the build happy:
+
+- `date:` must be written `YYYY-MM-DD`.
+- Keep the quotes around `title:` — a title containing a colon breaks
+  the page without them.
+- `semester:` must match the other entries for that semester exactly
+  (for example `Fall 2026`), because it is what groups the schedule.
+- Leave `room: ""` to show the default venue; type a room to override it.
+- If a field does not apply (no host yet), delete the whole line.
+
+## A week with no seminar
+
+Create the file with only three fields:
+
+```
+---
+semester: Fall 2026
+date: 2026-11-23
+note: "No seminar (Thanksgiving break)"
+---
+```
+
+## Add the flyer for a talk
+
+1. Open the `images` folder, choose **Add file → Upload files**, and
+   upload the flyer image (name it after the talk, for example
+   `2026-10-12-rivera.jpg`).
+2. Open that talk's file in `_talks`, press the pencil icon, and set
+   `flyer: images/2026-10-12-rivera.jpg`.
+3. Commit.
+
+The home page always shows the flyer of the next upcoming talk, so
+flyers can be uploaded weeks in advance; the panel rotates on its own
+as each talk date passes. If the next talk has no flyer yet, a
+placeholder box is shown.
+
+## Edit the team or the links
+
+- Team page: edit `_data/team.yml`. Photos go in `images/`.
+- Links page: edit `_data/links.yml`.
+- Site name, year, venue, time, contact address: edit `_data/site.yml`.
+
+In these files, keep the indentation and the quotes exactly as they
+are and change only the text between the quotes.
+
+## If the site did not update
+
+A broken build sends an email to whoever made the last commit. The
+usual causes are a missing quote, a date not written `YYYY-MM-DD`, or
+changed indentation in a `_data` file. Open your last edit, compare it
+against `TEMPLATE.md` or the neighboring entries, and commit a fix.

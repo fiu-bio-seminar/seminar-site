@@ -1,0 +1,15 @@
+# Site-wide build settings. Editors normally never touch this file;
+# the text content lives in _data/ and _talks/.
+title: Biology Seminar Series
+timezone: America/Chicago
+
+collections:
+  talks:
+    output: false   # set true later if per-talk abstract pages are wanted
+
+exclude:
+  - README.md
+  - CONTRIBUTING.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

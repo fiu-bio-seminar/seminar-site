@@ -1,0 +1,20 @@
+# Organizing committee. One block per person, in display order.
+# photo: a file name inside images/ (square photos work best).
+# Leave photo: "" to show initials instead.
+intro: "The seminar is organized by a volunteer committee of postdocs, graduate students, and faculty."
+members:
+  - name: "Dr. Faculty Advisor"
+    role: "Faculty Advisor"
+    bio: "One or two sentences about this person and what they do for the series."
+    email: "name@example.edu"
+    photo: ""
+  - name: "Student Name"
+    role: "Student Committee Member"
+    bio: "Invites speakers and arranges their visits."
+    email: "name@example.edu"
+    photo: ""
+  - name: "Student Name"
+    role: "Student Committee Member"
+    bio: "Runs announcements and the mailing list."
+    email: "name@example.edu"
+    photo: ""

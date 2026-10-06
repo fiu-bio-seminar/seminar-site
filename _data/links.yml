@@ -1,0 +1,19 @@
+# The Links page. One block per link, in display order.
+# note: is optional; leave note: "" to omit the second line.
+intro: "Everything for the seminar in one place."
+items:
+  - label: "Join by Zoom"
+    note: "For remote attendees"
+    url: "https://example.edu/zoom"
+  - label: "Nominate a speaker"
+    note: "Suggestions open all year"
+    url: "https://example.edu/nominate"
+  - label: "Meet with a speaker"
+    note: "Sign up for a one-on-one slot"
+    url: "https://example.edu/signup"
+  - label: "Recordings of past talks"
+    note: ""
+    url: "https://example.edu/recordings"
+  - label: "Department website"
+    note: ""
+    url: "https://example.edu/biology"

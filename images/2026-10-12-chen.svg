@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 1100" role="img" aria-label="Sample seminar flyer">
+  <rect width="850" height="1100" fill="#0C2340"/>
+  <rect x="0" y="0" width="850" height="14" fill="#CBA052"/>
+  <rect x="64" y="96" width="120" height="10" rx="5" fill="#00C1D5"/>
+  <text x="64" y="170" font-family="Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="6" fill="#FFC845">BIOLOGY SEMINAR SERIES</text>
+  <text x="64" y="330" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#FFFFFF">Sample talk title</text>
+  <text x="64" y="410" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#FFFFFF">for the next seminar</text>
+  <circle cx="425" cy="640" r="110" fill="#14305A" stroke="#00C1D5" stroke-width="4"/>
+  <text x="425" y="665" text-anchor="middle" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="#FFC845">MC</text>
+  <text x="64" y="850" font-family="Arial, sans-serif" font-size="40" font-weight="700" fill="#FFFFFF">Dr. Maya Chen</text>
+  <text x="64" y="900" font-family="Arial, sans-serif" font-size="28" fill="#AEBBD0">Example University · Molecular Biosciences</text>
+  <rect x="64" y="950" width="722" height="2" fill="#27456F"/>
+  <text x="64" y="1010" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#00C1D5">Monday, October 12 · 3:00 PM</text>
+  <text x="64" y="1052" font-family="Arial, sans-serif" font-size="26" fill="#AEBBD0">Example University · All are welcome</text>
+</svg>

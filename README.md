@@ -1,0 +1,37 @@
+# Seminar series website
+
+A Jekyll site for a weekly seminar series, built for GitHub Pages.
+Talks are markdown files with YAML front matter in `_talks/`; the
+team, links, and site identity live in small YAML files in `_data/`.
+The design is adapted from
+[fiu-bio-seminar.github.io](https://github.com/fiu-bio-seminar/fiu-bio-seminar.github.io).
+
+All names and talks currently in the repository are sample content.
+
+## Layout
+
+- `_talks/` — one markdown file per talk (see `_talks/TEMPLATE.md`)
+- `_data/site.yml` — name, year, venue, time, contact, flyer toggle
+- `_data/team.yml`, `_data/links.yml` — the Team and Links pages
+- `_layouts/default.html` — shared chrome and all CSS (brand colors
+  are the five tokens at the top of the stylesheet)
+- `index.html` — schedule page; Liquid renders the ledger, and a small
+  script applies date-relative state (past rows, the "Next up"
+  highlight, and which flyer shows) at page load
+- `images/` — flyers and team photos
+
+## Deploying
+
+Push to the default branch of a repository with GitHub Pages enabled
+(Settings → Pages → Deploy from a branch). GitHub Pages builds Jekyll
+natively; no Actions workflow is needed.
+
+Editing instructions for committee members are in
+[CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Local preview (optional)
+
+```
+gem install jekyll
+jekyll serve
+```
