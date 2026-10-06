@@ -15,9 +15,11 @@ All names and talks currently in the repository are sample content.
 - `_data/team.yml`, `_data/links.yml` — the Team and Links pages
 - `_layouts/default.html` — shared chrome and all CSS (brand colors
   are the five tokens at the top of the stylesheet)
-- `index.html` — schedule page; Liquid renders the ledger, and a small
-  script applies date-relative state (past rows, the "Next up"
-  highlight, and which flyer shows) at page load
+- `index.html` — schedule page; Liquid renders the ledger and composes
+  the flyer card from the next talk's front matter (banner, photo,
+  speaker, affiliation, title, date/room), and a small script applies
+  date-relative state (past rows, the "Next up" highlight, and which
+  talk the flyer shows) at page load
 - `images/` — flyers and team photos
 
 ## Deploying

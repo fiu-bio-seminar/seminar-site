@@ -128,13 +128,23 @@ h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2.2rem, 7vw
 
 footer { padding-block: 24px 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
 
-/* Hero with the next talk's flyer */
+/* Hero with the next talk's flyer, composed from that talk's front matter.
+   The card is a poster: its colors are the brand constants and do not
+   change with the page theme. */
 .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); gap: 32px 48px; align-items: start; }
 .flyer { margin: 0; }
 .flyer-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--stain); margin-bottom: 8px; }
-.flyer img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 14px 34px rgba(12, 35, 64, 0.18); }
+.flyer-card { display: flex; flex-direction: column; aspect-ratio: 8.5 / 11; background: var(--navy); color: #FFFFFF; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 14px 34px rgba(12, 35, 64, 0.18); overflow: hidden; }
+.fc-banner { padding: 16px 20px 12px; text-align: center; font-family: var(--display); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sun); }
+.fc-stripe { height: 5px; flex: none; background: linear-gradient(90deg, var(--gold) 0 20%, var(--cyan) 20% 40%, var(--pink) 40% 60%, var(--sun) 60% 80%, var(--gold) 80% 100%); }
+.fc-body { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 20px 22px; text-align: center; }
+.fc-photo { width: 42%; max-width: 160px; aspect-ratio: 1; border-radius: 50%; background: #14305A; border: 3px solid var(--gold); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 2rem; color: var(--sun); position: relative; overflow: hidden; flex: none; }
+.fc-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fc-title { margin: 4px 0 0; font-family: var(--display); font-weight: 700; font-size: clamp(1.05rem, 2.4vw, 1.3rem); line-height: 1.25; text-wrap: balance; }
+.fc-speaker { font-weight: 700; font-size: 1rem; color: var(--cyan); }
+.fc-affil { font-size: 0.85rem; color: #AEBBD0; }
+.fc-when { padding: 12px 20px; background: var(--sun); color: var(--navy); font-weight: 700; font-size: 0.9rem; text-align: center; font-variant-numeric: tabular-nums; }
 .flyer-empty { aspect-ratio: 8.5 / 11; max-width: 100%; display: grid; place-items: center; text-align: center; padding: 20px; border: 2px dashed var(--cyan); border-radius: 12px; background: var(--surface); color: var(--muted); font-size: 0.95rem; }
-.flyer figcaption { margin-top: 10px; font-size: 0.9rem; color: var(--muted); }
 @media (max-width: 760px) { .hero { grid-template-columns: minmax(0, 1fr); } .flyer { max-width: 22rem; } }
 
 @media (max-width: 640px) {

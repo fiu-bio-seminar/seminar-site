@@ -37,19 +37,25 @@ note: "No seminar (Thanksgiving break)"
 ---
 ```
 
-## Add the flyer for a talk
+## The flyer
+
+The flyer on the home page is generated automatically from the next
+upcoming talk's entry: it shows the site banner, the speaker's photo,
+name, affiliation, the talk title, and the date and room. Nothing
+needs to be designed or uploaded week to week — the flyer rotates on
+its own as each talk date passes.
+
+To add the speaker's photo:
 
 1. Open the `images` folder, choose **Add file → Upload files**, and
-   upload the flyer image (name it after the talk, for example
-   `2026-10-12-rivera.jpg`).
+   upload the photo (square photos work best; name it after the
+   speaker, for example `rivera.jpg`).
 2. Open that talk's file in `_talks`, press the pencil icon, and set
-   `flyer: images/2026-10-12-rivera.jpg`.
+   `photo: images/rivera.jpg`.
 3. Commit.
 
-The home page always shows the flyer of the next upcoming talk, so
-flyers can be uploaded weeks in advance; the panel rotates on its own
-as each talk date passes. If the next talk has no flyer yet, a
-placeholder box is shown.
+If a talk has no `photo:` line, the flyer shows the speaker's
+initials instead.
 
 ## Edit the team or the links
 
