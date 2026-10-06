@@ -18,14 +18,22 @@ permalink: /
   {% if site.data.site.flyer_show %}
   <figure class="flyer" id="flyer" data-for="{% if next_talk %}{{ next_talk.date | date: '%Y-%m-%d' }}{% endif %}">
     <div class="flyer-label">Next seminar</div>
-    <div id="flyer-slot">
-      {%- if next_talk.flyer -%}
-      <img id="flyer-img" src="{{ next_talk.flyer }}" alt="Flyer for the next seminar">
-      {%- else -%}
-      <div class="flyer-empty">The next talk's flyer goes here</div>
-      {%- endif -%}
+    {% if next_talk %}
+    {% assign fw = next_talk.speaker | replace: "Dr. ", "" | split: " " %}
+    <div class="flyer-card" role="group" aria-label="Flyer for the next seminar">
+      <div class="fc-banner">{{ site.data.site.name }}</div>
+      <div class="fc-stripe"></div>
+      <div class="fc-body">
+        <div class="fc-photo" id="fc-photo" aria-hidden="true">{{ fw[0] | slice: 0 | upcase }}{{ fw[1] | slice: 0 | upcase }}{% if next_talk.photo %}<img src="{{ next_talk.photo }}" alt="" onerror="this.remove()">{% endif %}</div>
+        <h3 class="fc-title" id="fc-title">{{ next_talk.title }}</h3>
+        <div class="fc-speaker" id="fc-speaker">{{ next_talk.speaker }}</div>
+        <div class="fc-affil" id="fc-affil">{{ next_talk.affiliation }}</div>
+      </div>
+      <div class="fc-when" id="fc-when">{{ next_talk.date | date: '%A, %B %-d' }} · {{ next_talk.room | default: site.data.site.where }}</div>
     </div>
-    <figcaption id="flyer-caption">{% if next_talk %}{{ next_talk.speaker }} · {{ next_talk.date | date: '%A, %B %-d' }} · {{ next_talk.room | default: site.data.site.where }}{% endif %}</figcaption>
+    {% else %}
+    <div class="flyer-empty">The next talk appears here</div>
+    {% endif %}
   </figure>
   {% endif %}
 </div>
@@ -40,7 +48,8 @@ permalink: /
   <ol class="talks">
     {% for t in s.items %}
     {% if t.speaker %}
-    <li class="talk" data-date="{{ t.date | date: '%Y-%m-%d' }}" data-speaker="{{ t.speaker | escape }}" data-datelong="{{ t.date | date: '%A, %B %-d' }}" data-room="{{ t.room | default: site.data.site.where | escape }}"{% if t.flyer %} data-flyer="{{ t.flyer }}"{% endif %}>
+    {% assign w = t.speaker | replace: "Dr. ", "" | split: " " %}
+    <li class="talk" data-date="{{ t.date | date: '%Y-%m-%d' }}" data-speaker="{{ t.speaker | escape }}" data-title="{{ t.title | escape }}" data-affil="{{ t.affiliation | escape }}" data-initials="{{ w[0] | slice: 0 | upcase }}{{ w[1] | slice: 0 | upcase }}" data-datelong="{{ t.date | date: '%A, %B %-d' }}" data-room="{{ t.room | default: site.data.site.where | escape }}"{% if t.photo %} data-photo="{{ t.photo }}"{% endif %}>
       <div class="date"><span class="day">{{ t.date | date: "%b %-d" }}</span><span class="dow">{{ t.date | date: "%A" }}</span></div>
       <div class="talk-main">
         <p class="speaker">{{ t.speaker }}</p>
@@ -80,17 +89,18 @@ permalink: /
     if (d < today) { row.classList.add("past"); addTag(row, "Past"); }
     else if (!next && row.dataset.speaker) { next = row; row.classList.add("next"); addTag(row, "Next up"); }
   }
-  /* Repoint the hero flyer at the true next talk when the build predates it. */
+  /* Repoint the hero flyer card at the true next talk when the build predates it. */
   const flyer = document.getElementById("flyer");
-  const empty = '<div class="flyer-empty">The next talk\'s flyer goes here</div>';
   if (flyer && next && flyer.dataset.for !== next.dataset.date) {
-    document.getElementById("flyer-slot").innerHTML = next.dataset.flyer
-      ? `<img id="flyer-img" src="${next.dataset.flyer}" alt="Flyer for the next seminar">`
-      : empty;
-    document.getElementById("flyer-caption").textContent =
-      `${next.dataset.speaker} · ${next.dataset.datelong} · ${next.dataset.room}`;
+    const d = next.dataset;
+    const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+    set("fc-title", d.title);
+    set("fc-speaker", d.speaker);
+    set("fc-affil", d.affil);
+    set("fc-when", `${d.datelong} · ${d.room}`);
+    const photo = document.getElementById("fc-photo");
+    if (photo) photo.innerHTML = d.initials +
+      (d.photo ? `<img src="${d.photo}" alt="" onerror="this.remove()">` : "");
   }
-  const img = document.getElementById("flyer-img");
-  if (img) img.addEventListener("error", () => { document.getElementById("flyer-slot").innerHTML = empty; });
 })();
 </script>
